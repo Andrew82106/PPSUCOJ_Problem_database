@@ -1,0 +1,52 @@
+"""
+你问为什么酒馆老板能够招到这么多随从？因为他有漏斗蛋糕！
+
+输入一个数字n，输出一个高度为n的漏斗蛋糕。
+
+高度为1的漏斗蛋糕如下：
+
+```text
+*
+```
+高度为2的漏斗蛋糕如下：
+```text
+**
+*
+```
+高度为3的漏斗蛋糕如下：
+```text
+***
+**
+*
+```
+"""
+import os
+import random
+
+root = os.path.dirname(__file__)
+inputpre = "t"
+inputsuf = '.in'
+outputpre = "t"
+outputsuf = '.out'
+batch = 20
+
+
+fib = [0 for _ in range(101)]
+fib[1] = 1
+fib[2] = 1
+def generate_fib(n):
+    if n <= 2:
+        return 1
+    else:
+        if fib[n] != 0:
+            return fib[n]
+        fib[n] = generate_fib(n - 1) + generate_fib(n - 2)
+        return fib[n]
+
+
+for i in range(0, batch + 1):
+    with open(os.path.join(root, inputpre + str(i) + inputsuf), 'w') as f:
+        n = str(random.randint(1, 100))
+        f.write(n + '\n')
+    with open(os.path.join(root, outputpre + str(i) + outputsuf), 'w') as f:
+        f.write(str(generate_fib(int(n))))
